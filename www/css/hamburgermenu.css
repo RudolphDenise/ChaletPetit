@@ -1,0 +1,110 @@
+* {
+  
+}
+@mixin mixin--vertical-center-block {
+	position: relative;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	transform: translateY(-50%);  
+}
+@mixin mixin--hamburger-blade($color, $width, $height, $transition-speed, $border-radius) {
+    height: $height;
+    background-color: $color;
+    width: $width;
+  display:block;
+  border-radius: $border-radius;
+    -webkit-transition: $transition-speed ease-in-out;
+  -moz-transition: $transition-speed ease-in-out;
+  -o-transition: $transition-speed ease-in-out;
+  transition: $transition-speed ease-in-out;
+}
+@mixin mixin--hamburger-menu($background-color, $background-color-open, $background-color-hover, $background-color-open-hover, $width, $height, $blade-color, $blade-color-open, $blade-color-hover, $blade-color-open-hover, $blade-width, $blade-height, $transition-speed, $border-radius, $blade-border-radius) {
+.menu-toggle {
+      width: $width;
+    height: $height;
+     overflow:hidden;
+     text-indent:-9999px;
+    display:block;
+    background-color: #ccc;
+  border-radius: $border-radius;
+  &:hover {
+    background-color: $background-color-hover;
+    .hamburger {
+      background-color: $blade-color-hover;
+      &:after {
+        background-color: $blade-color-hover;
+      }
+      &:before {
+        background-color: $blade-color-hover;
+      }
+    }
+  }
+   .nav-open & {
+      background-color: $background-color-open;
+     &:hover {
+       background-color: $background-color-open-hover;
+       .hamburger {
+         
+         &:after {
+           background-color: $blade-color-open-hover;
+         }
+         &:before {
+           background-color: $blade-color-open-hover;
+         }
+       }
+     }
+    }
+  .hamburger {
+    @include mixin--hamburger-blade($blade-color, $blade-width, $blade-height, $transition-speed, $blade-border-radius);
+    margin: 0 auto;
+    display:block;
+   @include mixin--vertical-center-block;
+    
+    .nav-open & {
+      background: 0 0;
+    }
+    &:after {
+      content: "";
+      position:absolute;
+       @include mixin--hamburger-blade($blade-color, 100%, 100%, $transition-speed, $blade-border-radius);
+      bottom:250%;
+        -webkit-transform-origin: center center;
+  -moz-transform-origin: center center;
+  -o-transform-origin: center center;
+  transform-origin: center center;
+
+        .nav-open & {
+          opacity:1;
+            -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+bottom:0;
+       }
+    }
+    &:before {
+      content: "";
+      opacity:1;
+      position:absolute;
+       @include mixin--hamburger-blade($blade-color, 100%, 100%, $transition-speed, $blade-border-radius);
+       
+      top:250%;
+        -webkit-transform-origin: center center;
+  -moz-transform-origin: center center;
+  -o-transform-origin: center center;
+  transform-origin: center center;
+          .nav-open & {
+              -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+      top:0%;
+        }
+    }
+  }
+}
+}
+@include mixin--hamburger-menu(#ccc, #000, #ddd, #222, 100px, 100px, #fff, #fff, #ccc, #ccc, 75%, 8%, .25s, 5px, 5px);

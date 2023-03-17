@@ -1,0 +1,419 @@
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+
+/*Reenie Beanie - latin */
+@font-face {
+    font-family: 'Reenie Beanie', cursive;
+    font-style: normal;
+    font-weight: 100;
+    /* IE9 Compat Modes */
+    src: url('../fonts/ReenieBeanie-Regular.ttf');
+    src: local('Reenie Beanie'), local('Reenie Beanie'),
+      /* IE6-IE8 */
+          url('../fonts/roboto-v18-latin-100.eot?#iefix') format('embedded-opentype'),
+      /* Super Modern Browsers */
+          url('../fonts/roboto-v18-latin-100.woff2') format('woff2'),
+      /* Modern Browsers */
+          url('../fonts/roboto-v18-latin-100.woff') format('woff'),
+      /* Safari, Android, iOS */
+          url('../fonts/roboto-v18-latin-100.ttf') format('truetype'),
+      /* Legacy iOS */
+          url('../fonts/roboto-v18-latin-100.svg#Roboto') format('svg');
+  }
+
+
+
+
+
+/*Leaflet*/
+
+#map {
+    width: 90vw;
+    height: 50vh;
+}
+
+
+.hotelIcon {
+    text-align: center;
+    /* Horizontally center the text (icon) */
+    /* line-height: 50px; */
+    /* Vertically center the text (icon) */
+  }
+
+
+/* Layout für Hero*/
+/* Quelle: https://www.w3schools.com/howto/howto_css_hero_image.asp */
+
+#hero h1 {
+    color:#FFFFFF;
+    /* font-family: 'Reenie Beanie'; */
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+}
+
+#map > div.leaflet-pane.leaflet-map-pane > div.leaflet-pane.leaflet-popup-pane > div > div.leaflet-popup-content-wrapper > div {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+   
+}
+
+
+#hero p {
+    color:#FFFFFF;
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 2rem;
+}
+
+
+#hero button {
+    background: #75474a;
+    color:#FFFFFF;
+    border: #FFFFFF;
+    font-family: 'Reenie Beanie';
+}
+
+body, html {
+    height: 100%;
+    
+}
+
+/* OFF CANVAS NAVIGATION */
+
+#offcanvasDarkNavbarLabel {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    font-size: 4rem;
+}
+
+#offcanvasDarkNavbar > button {
+    font-size: 4rem;
+}
+
+
+#offcanvasDarkNavbar  a {
+    font-family: 'Lato', sans-serif;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+
+/* Section Besinderheiten & Hintergründe */
+
+#about {
+    background: #FFFFFF;
+    color: #333333;
+}
+
+#gallerie {
+    background: #eeeeee;
+
+}
+
+#buchen {
+    background: #eeeeee;
+
+}
+
+#buchen button {
+    background: #75474a;
+    color:#FFFFFF;
+    border: #FFFFFF;
+
+}
+
+
+#anfahrt {
+    background: #beaaa7;
+
+}
+
+#impressum {
+
+}
+
+#footer {
+    background: rgba(0,0,0,0.9);
+    
+}
+
+/*Social media Buttons */ 
+#footer > div.mb-3.d-flex.align-items-center.justify-content-center > a:nth-child(1) > i {
+  font-size: 4rem;
+
+}
+
+#footer > div.mb-3.d-flex.align-items-center.justify-content-center > a:nth-child(2) > i {
+    font-size: 4rem;
+  
+  }
+/*Follow Schriftzug */
+
+#footer > p:nth-child(2)
+{
+    font-size: 1.8rem;
+    font-family: 'Vibur';
+}
+#footer a, h3, h4, p, i {
+    color: #FFFFFF ;
+}
+#footer  p {
+    color: #FFFFFF ;
+}
+
+#footer i {
+    color: #FFFFFF ;
+    font-size: 2rem;
+
+
+}
+
+
+
+/* Font */
+
+p,
+h1,
+h2,
+h3,
+h4,
+.display-3,
+.display-4 {
+    color: #333333;
+}
+
+.modal p,
+h1,
+h2 {
+    color: #1B1B1B;
+}
+
+a {
+    text-decoration: none;
+    color: #4B946A;
+}
+
+.card,
+.lead,
+.card-text {
+    color: #1B1B1B;
+}
+
+
+
+
+
+h1 {
+    font-size: 24px;
+    font-weight: normal;
+    margin: 0px;
+    overflow: visible;
+    padding: 0px;
+    text-align: center;
+}
+
+h2{
+    font-family: 'Reenie Beanie', cursive;
+    text-align: center; 
+    font-size:3rem ;
+}
+
+
+#footer > div.mb-4.pt-4 > h3 {
+    font-family: 'Reenie Beanie', cursive;
+    color: #FFFFFF ;
+    font-size:3rem ;
+
+}
+
+h3 {
+    font-family: 'EB Garamond', serif;
+}
+
+p {
+    font-family: 'Lato', sans-serif;
+}
+
+
+/* The hero image */
+.hero-image {
+    /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
+     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/data/img/274834005.jpg"); 
+    /* background-image: url("/data/img/274834005.jpg"); */
+  
+    /* Set a specific height */
+     height: 100vh; 
+  
+    /* Position and center the image to scale nicely on all screens */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    color: #FFFFFF;
+  }
+  
+  /* Place text in the middle of the image */
+  .hero-text {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+  }
+
+/* https://wiki.selfhtml.org/wiki/CSS/Tutorials/Hintergrund/Hero-Images */
+
+/*Font Hero */ 
+
+
+
+
+
+.event {
+    border-radius: 4px;
+    color: #FFFFFF;
+    font-size: 12px;
+    margin: 0px 30px;
+    padding: 2px 0px;
+}
+
+.event.listening {
+    background-color: #333333;
+    display: block;
+}
+
+.event.received {
+    background-color: #4B946A;
+    display: none;
+}
+
+#deviceready.ready .event.listening {
+    display: none;
+}
+
+#deviceready.ready .event.received {
+    display: block;
+}
+
+@keyframes fade {
+    from {
+        opacity: 1.0;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+.blink {
+    animation: fade 3000ms infinite;
+    -webkit-animation: fade 3000ms infinite;
+}
+
+
+.iconoverview {
+    font-family: 'Noto Sans Symbols 2', sans-serif;
+
+}
+
+
+.iconoverview div {
+    font-family: 'Noto Sans Symbols 2', sans-serif;
+
+}
+
+.iconoverview i {
+    font-size: 10rem;
+    color: #75b9b5;
+}
+
+.btn-primary {
+    color: #75b9b5
+}
+
+.mainpageelement {
+    text-align: center;
+    font-family: system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #30cfd0;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(48, 207, 208, 0.5), rgba(51, 8, 103, 0.5));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(48, 207, 208, 0.5), rgba(51, 8, 103, 0.5));
+
+
+}
+
+.gradient-custom-near-moon {
+    /* fallback for old browsers */
+    background: #5ee7df;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(94, 231, 223, 0.5), rgba(180, 144, 202, 0.5));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(94, 231, 223, 0.5), rgba(180, 144, 202, 0.5))
+}
+
+.btn-calm {
+    background: #75b9b5;
+    ;
+}
+
+.btn-calm-two {
+    background: rgb(144, 119, 169);
+}
+
+
+.blurry-background {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    width: 800px;
+    height: 800px;
+    border-radius: 50% 22% 40% 80%;
+    filter: blur(100px);
+    background: radial-gradient(circle at 50% 50%, rgba(76, 0, 255, 1), rgba(76, 0, 255, 0));
+    opacity: 0.2;
+}
+
+
+.box {
+    /* margin:50px;
+    width:100px;
+    height:50px;
+    border-radius:20px; */
+    /* color:#fff;
+    text-align:center;
+    line-height:50px; */
+    box-shadow:
+    20px 5px 40px #CF77F3,
+      0px 5px 40px #009BFF,
+     -20px 5px 40px #2AC9DB;
+     /* background-image: linear-gradient(-90deg, #CF77F3 0%, #009BFF 47%, #2AC9DB 100%); */
+   }
+
+
+
+@media screen and (prefers-color-scheme: dark) {
+    /* body {
+        background-image: linear-gradient(to bottom, #585858 0%, #1B1B1B 51%);
+    } */
+}
+
+
+@media only screen and (max-width: 600px) {}
