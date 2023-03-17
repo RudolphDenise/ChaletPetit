@@ -77,7 +77,7 @@ window.addEventListener("load", (event) => {
 
   //Makes a String ownly with date without time in standard local formatting
   let localDateFormat = function (date) {
-    let localeDateFormat = date.toLocaleDateString()
+    let localeDateFormat = date.toLocaleDateString('de-AT')
     return localeDateFormat
   }
 
