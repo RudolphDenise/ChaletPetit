@@ -131,19 +131,18 @@ window.addEventListener("load", (event) => {
   }
   buchungsdauer('02/5/2022', '02/6/2022')
 
-  let validierungBuchungstage = function (d1, d2) {
-    let anreise = convertDate(d1)
-    let abreise = convertDate(d2)
-    let buchungsdauerChache = buchungsdauer(anreise, abreise)
-    let abreiseNachAnreise = compareTime(anreise, abreise)
+
+  let validierungBuchungsdauer = function (d1, d2) {
+
+    let buchungsdauerChache = buchungsdauer(d1, d2)
+  
     if (buchungsdauerChache >= 4) {
       console.log('Mindestbuchungsdauer erfüllt: Sie dürfen buchen');
     }
-    else if (abreiseNachAnreise) {
-      console.log('Richtige Reihenfolge: Sie dürfen buchen')
+    else  {
+      console.log('Sie müssen mindestens für 4 age buchen')
     }
   }
-
 
 
   let createMessage = function (CUSTOMER_MESSAGE) {
