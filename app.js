@@ -89,13 +89,6 @@ const mail = require('./routes/customerMail.router');
 app.use('/requestmail', mail)
 
 
-
-// const journalRoutes = require('./routes/diaryroutes')
-// app.use('/journal', journalRoutes)
-
-// const authenticationroutes = require('./routes/authenticationroutes')
-// app.use(authenticationroutes )
-
 //generates HTTP Server 
 app.listen(PORT, () => {
     console.log('Server Started at Port:', PORT)
