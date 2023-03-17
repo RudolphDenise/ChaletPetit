@@ -1,30 +1,5 @@
 console.log('anfragemail loaded');
 
-
-//Test Datepicker 
-
-// $( "#DtChkIn" ).datepicker();
-// $( "#DtChkOut" ).datepicker();
-
-// $(function() {
-//   $( "#DtChkIn" ).datepicker({
-//     defaultDate: "+1w",
-//     changeMonth: true,
-//     numberOfMonths: 3,
-//     onClose: function( selectedDate ) {
-//       $( "#to" ).datepicker( "option", "minDate", selectedDate );
-//     }
-//   });
-//   $( "#DtChkOut" ).datepicker({
-//     defaultDate: "+1w",
-//     changeMonth: true,
-//     numberOfMonths: 3,
-//     onClose: function( selectedDate ) {
-//       $( "#from" ).datepicker( "option", "maxDate", selectedDate );
-//     }
-//   });
-// });
-
 //Global Variables
 let formMailAnfrage = document.getElementById('formjetzanfragen')
 let vorname = document.getElementById('vorname')
@@ -43,11 +18,11 @@ let infonumber = document.getElementById('infonumber')
 let errormail = document.getElementById('errormail')
 let errornumber = document.getElementById('errornumber')
 //Mailadresse des Empfängers
-let mailOfEmpfänger = 'denise.rudolph.uni@gmail.com'
-//let mailOfEmpfänger = 'roman.roznovsky@gmail.com'
+let mailOfEmpfänger = *****
+//let mailOfEmpfänger = ***
 
 //Mailadresse des Sendgrid-Accounts NICHT ÄNDERBAR
-const MAILOFSENDGRIDACCOUNT = 'denise.rudolph.uni@gmail.com'
+const MAILOFSENDGRIDACCOUNT = ****
 
 let btnTest = document.getElementById('testformbtn')
 let formTest = document.getElementById('testform')
@@ -85,7 +60,8 @@ window.addEventListener("load", (event) => {
     //save components of date-string in an array
     let dateStringArray = bookingdate.split("/");
     //get values from arry and create a new dateobject 
-    let month = dateStringArray[0]
+    //month -1 because they start with 0
+    let month = dateStringArray[0] -1
     let date = dateStringArray[1]
     let year = dateStringArray[2]
     // console.log('year', year);
