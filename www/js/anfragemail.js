@@ -1,5 +1,6 @@
 console.log('anfragemail loaded');
 
+
 //Global Variables
 let formMailAnfrage = document.getElementById('formjetzanfragen')
 let vorname = document.getElementById('vorname')
@@ -17,12 +18,30 @@ let infomail = document.getElementById('infomail')
 let infonumber = document.getElementById('infonumber')
 let errormail = document.getElementById('errormail')
 let errornumber = document.getElementById('errornumber')
+let feedbackDivArrivalAfterDepature = document.getElementById('feedbackarrivalafterdepature')
+let feedbackBookingToShort = document.getElementById('feedbackbookingtoshort')
+let calendar = document.getElementById("ui-datepicker-div")
+
+
+
+// Obj to save the season of arrival Date
+seasonObj = {
+  season: {
+    summer: false,
+    winter: false,
+  }
+}
+
+
+
+
+
 //Mailadresse des Empfängers
-let mailOfEmpfänger = *****
-//let mailOfEmpfänger = ***
+let mailOfEmpfänger = '******gmail.com'
+//let mailOfEmpfänger = '*********@gmail.com'
 
 //Mailadresse des Sendgrid-Accounts NICHT ÄNDERBAR
-const MAILOFSENDGRIDACCOUNT = ****
+const MAILOFSENDGRIDACCOUNT = '***********gmail.com'
 
 let btnTest = document.getElementById('testformbtn')
 let formTest = document.getElementById('testform')
@@ -30,6 +49,7 @@ let formTest = document.getElementById('testform')
 
 window.addEventListener("load", (event) => {
   console.log("page is fully loaded");
+
 
 
   let testGetFetch = async function () {
@@ -45,35 +65,38 @@ window.addEventListener("load", (event) => {
 
 
 
-  // const selectOptions = formMailAnfrage.personenzahl
+  // *******************
+  /* Conversion of date */
+  // *******************
 
-  // console.log(btnkontakt);
-  // btnkontakt.addEventListener('click', (e)=>{
-  //     console.log('Hello World')
-  //   })
+  let testdate1 = '09/04/2023'
+  let testdate2 = '02/15/2023'
 
+  // Convert date from array to dateobj
 
-  // Convert date to local date format from String
-
-  let testDate = '03/11/2023'
+  let testDate = '02/11/2023'
   let convertDate = function (bookingdate) {
     //save components of date-string in an array
     let dateStringArray = bookingdate.split("/");
     //get values from arry and create a new dateobject 
     //month -1 because they start with 0
-    let month = dateStringArray[0] -1
+    let month = dateStringArray[0] - 1
     let date = dateStringArray[1]
     let year = dateStringArray[2]
     // console.log('year', year);
     // console.log('month', month);
     // console.log('date ', date );
     const EntrydateObj = new Date(year, month, date)
-    console.log('EntrydateObj', EntrydateObj);
+    //console.log('EntrydateObj convertiertes Datum:', EntrydateObj);
     return EntrydateObj
 
   }
 
-  convertDate( 'testDate funktion testen' ,  testDate)
+
+
+  let convertierungtest = convertDate(testDate)
+  console.log('convertierungtest', convertierungtest);
+
 
   //Makes a String ownly with date without time in standard local formatting
   let localDateFormat = function (date) {
@@ -97,8 +120,9 @@ window.addEventListener("load", (event) => {
       nachname: nachname.value,
       emailadresse: emailadresse.value,
       telefonnummer: phoneNumber,
-      anreise: localDateFormat(convertDate(anreise.value)),
-      abreise: localDateFormat(convertDate(abreise.value)),
+      //Just convert string in DateObj
+      anreise: convertDate(anreise.value),
+      abreise: convertDate(abreise.value),
       personenzahl: personenzahl.value,
       dogsonboard: radioButtons.value,
       fragenanmerkungen: fragenanmerkungen.value
@@ -107,42 +131,214 @@ window.addEventListener("load", (event) => {
     return CUSTOMER_MESSAGE
   }
 
+  // *******************
+  /* Validation of date */
+  // *******************
 
-  /* Validierung des Datums */
-
-  //Vergleich ob ein Tag nicht vor dem anderen liegt
-  function compareTime(time1, time2) {
-    return new Date(time1) < new Date(time2); // true if time1 is earlier
+  //Compare if arrival is before depature
+  function compareIfArriavalBeforeDepature(time1, time2) {
+    return time1 < time2; // true if time1 is earlier
   }
 
 
+  //Visual feedback alert if arrival is after depature
 
-  // Die Buchungsdauer erfassen
+  let arrivalAfterDepatureAlert = function (isChronologyRight) {
+    feedbackDivArrivalAfterDepature.innerHTML = ""
+
+
+    if (!isChronologyRight) {
+      anreise.classList.add('alert', 'alert-danger')
+      abreise.classList.add('alert', 'alert-danger')
+      feedbackDivArrivalAfterDepature.classList.add('alert', 'alert-danger')
+      feedbackDivArrivalAfterDepature.innerHTML = `Hoppala, da ist etwas schief gelaufen! <br>
+    Bitte überprüfe und korregiere Deine Buchungsdaten.`
+
+    }
+    else {
+      anreise.classList.remove('alert', 'alert-danger')
+      abreise.classList.remove('alert', 'alert-danger')
+      feedbackDivArrivalAfterDepature.innerHTML = ""
+
+    }
+
+  }
+
+
+// Convert Date for isBookingWinterSeason Function
+
+
+let convertDateforisBookingWinterSeason = function (datum) {
+
+    //save components of date-string in an array
+
+    //'2022-12-24'
+
+    let dateStringArray = datum.split("/");
+    //get values from arry and create a new dateobject 
+  console.log(dateStringArray);
+    let month = dateStringArray[1] 
+    let date = dateStringArray[2]
+    let year = dateStringArray[0]
+    // console.log('year', year);
+    // console.log('month', month);
+    // console.log('date ', date );
+    const string = `${year}-${month}-${date} `
+    console.log('string  convertiertes Datum: ', '2022-12-24:', string );
+    return string
+  
+}
+
+convertDateforisBookingWinterSeason('2022/12/24')
+
+
+  /* Function to find out if BookingDate is in winter or summer season */
+
+  let isBookingWinterSeason = function (dateString) {
+    let date = new Date(dateString);
+    // jahresbeginn = new Date('2022-12-24')
+    // saisonendeApril = new Date('2023-04-09')
+
+    let startDate = new Date('2023-12-24')
+    let endDate = new Date('2024-04-09');
+
+    // console.log('date isBookingWinterSeason', date);
+    // //let isWinterSeason = undefined
+    // console.log(date.getFullYear() !== startDate.getFullYear());
+    // console.log();
+
+    //Wenn der angegebene Tag kleiner als der beliebige Start Tag ist
+    // && und der angegebene Tag kleiner ist als der Endtag der Saison 
+    // TODO: ? und wenn der angegebene Tag in der Vergangenheit liegt
+    //Nope, ganz am Anfang machen
+    if (((date >= startDate) && (date <= endDate)) ) {
+      seasonObj.season.winter = true
+      seasonObj.season.summer = false
+    }
+    //Wenn das angegebene Jahr nicht im beliebigen StartJahr 2022 liegt
+    //&& und wenn das angegebene Jahr größer ist als das 2022
+    else if ((date.getFullYear() !== startDate.getFullYear()) && (date.getFullYear() > startDate.getFullYear())) {
+      let diff = date.getFullYear() - startDate.getFullYear()
+      let actualyear = 2023 + diff
+      let nextactualyear = 2023 + diff +1
+      jahresbeginn = new Date(actualyear, 0, 1)
+      saisonendeApril = new Date(actualyear, 3, 9)
+      saisonStartDez = new Date(actualyear, 11, 24)
+      saisonendeAprilFolgejahr = new Date(nextactualyear , 03, 09);
+      // console.log('jahresbeginn', jahresbeginn);
+      // console.log('saisonendeApril', saisonendeApril);
+      // console.log('diff', diff);
+      // console.log(' startDate', startDate);
+      // console.log(' endDate', endDate);
+      // console.log((date >= startDate) && (date <= endDate));
+
+      //Wenn der Tag größer gleich Jahresbegin ist
+      //&& kleiner gleich Saisonende im April ist
+      //ODER wenn der Tag größer gleich der Saison Start im Dezember ist
+      //
+      if (  ((date >= jahresbeginn) && (date <= saisonendeApril)) || ((date >= saisonStartDez) && (date <= saisonendeAprilFolgejahr))) {
+        seasonObj.season.winter = true
+        seasonObj.season.summer = false
+      }
+      // else{
+      //   seasonObj.season.winter = false
+      // seasonObj.season.summer = true
+      // }
+
+    }
+    else {
+      seasonObj.season.winter = false
+      seasonObj.season.summer = true
+    }
+
+  }
+
+
+  // isBookingWinterSeason('2027-04-26')
+  // console.log('isBookingWinterSeason:', seasonObj.season.winter);
+
+
+
+   // Find out Booking duration 
   //https://linuxhint.com/calculate-days-between-two-dates-javascript/
   let buchungsdauer = (d1, d2) => {
     console.log('d1 in buchungsdauer', d1);
     let anreise = convertDate(d1)
     let abreise = convertDate(d2)
-    console.log('anreise in buchungsdauer', anreise);
+    //console.log('anreise in buchungsdauer', anreise);
     let difference = abreise.getTime() - anreise.getTime();
     let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
     console.log('TotalDays:', TotalDays);
     return TotalDays;
   }
-  buchungsdauer('02/5/2022', '02/6/2022')
 
 
-  let validierungBuchungsdauer = function (d1, d2) {
 
-    let buchungsdauerChache = buchungsdauer(d1, d2)
+
+
+  // // anreise.addEventListener('focus', currentSeasonObj)
+  // // anreise.addEventListener('focusout', currentSeasonObj)
+  // // abreise.addEventListener('focus', currentSeasonObj)
+
   
-    if (buchungsdauerChache >= 4) {
-      console.log('Mindestbuchungsdauer erfüllt: Sie dürfen buchen');
+
+  // //Feedback alert if booking is to short 
+
+  let durationNotAllowedAlert = function (iswinter, duration) {
+    feedbackBookingToShort.innerHTML = ""
+    let buchungsdauer = duration
+    //Saisonale Mindestbuchungdauer Text
+    let winter = `In der Wintersaison vom 01.01 - 09.04. und ab 
+    24.12 - 09.04. des Folgejahres kann das Chalet Petit 
+    ab einer Buchungsdauer von sieben Tagen vermietet werden`
+
+    let summer = `In der Sommersaison vom 24.12 - 09.04. kann das Chalet Petit 
+    ab einer Buchungsdauer von vier Tagen vermietet werden`
+
+   
+
+    if (iswinter && buchungsdauer <= 7 ) {
+      feedbackBookingToShort.classList.add('alert', 'alert-primary')
+      feedbackBookingToShort.innerHTML = `${winter}`
     }
-    else  {
-      console.log('Sie müssen mindestens für 4 age buchen')
+    else if(!iswinter && buchungsdauer <= 4 ) {
+      feedbackBookingToShort.classList.add('alert', 'alert-primary')
+      feedbackBookingToShort.innerHTML = `${summer}`
+    }
+    else{
+      feedbackBookingToShort.classList.remove('alert', 'alert-primary')
+      feedbackBookingToShort.innerHTML = ``
+
     }
   }
+
+  //TODO: TESTEN
+    let seasonValidation = function(d1,d2){
+
+    
+      let dauer = buchungsdauer(d1,d2 )
+      let wahrheitswert =  convertDateforisBookingWinterSeason (isBookingWinterSeason(d1))
+      console.log('seasonValidation   isBookingWinterSeason',  seasonObj.season.winter );
+    
+      console.log('seasonValidation  buchungsdauer', dauer);
+      durationNotAllowedAlert( wahrheitswert,dauer)
+    
+    } 
+    
+    let d3 = '24/12/2023'
+    let d4 = '25/12/2023'
+    seasonValidation(d3, d4 )
+
+
+
+  let feedsesonbacktest = durationNotAllowedAlert(testdate1, testdate2)
+  console.log('feedsesonbacktest', feedsesonbacktest);
+  arrivalAfterDepatureAlert(feedsesonbacktest)
+
+
+  let copareTimetest = compareTime(testdate1,testdate2 )
+
+
 
 
   let createMessage = function (CUSTOMER_MESSAGE) {
@@ -150,16 +346,16 @@ window.addEventListener("load", (event) => {
 
     const msg = {
       to: mailOfEmpfänger,
-      subject: `Buchungsanfrage: ${CUSTOMER_MESSAGE.anreise} - ${CUSTOMER_MESSAGE.abreise}`,
+      subject: `Buchungsanfrage: ${CUSTOMER_MESSAGE.anreise} - ${CUSTOMER_MESSAGE.abreise} `,
       from: MAILOFSENDGRIDACCOUNT, // Use the email address or domain you verified above
       cc: CUSTOMER_MESSAGE.emailadresse,
-      html: ` <p><b>Interessent:</b> ${CUSTOMER_MESSAGE.vorname + ' ' + CUSTOMER_MESSAGE.nachname}<br>
-      <b>E-Mail:</b> ${CUSTOMER_MESSAGE.emailadresse}<br> 
-      <b>Telefon:</b> ${CUSTOMER_MESSAGE.telefonnummer}<br> 
-      <b>Gewünschter Buchungszeitraum:</b> ${CUSTOMER_MESSAGE.anreise} bis ${CUSTOMER_MESSAGE.abreise}<br> 
-      <b>Persohnenzahl:</b> ${CUSTOMER_MESSAGE.personenzahl}<br>
-      <b>Hunde an Board?:</b> ${CUSTOMER_MESSAGE.dogsonboard}<br> 
-      <b>Anmerkungen:</b>${CUSTOMER_MESSAGE.fragenanmerkungen} </p>`
+      html: ` < p > <b>Interessent:</b> ${CUSTOMER_MESSAGE.vorname + ' ' + CUSTOMER_MESSAGE.nachname} <br>
+      <b>E-Mail:</b> ${CUSTOMER_MESSAGE.emailadresse}<br>
+        <b>Telefon:</b> ${CUSTOMER_MESSAGE.telefonnummer}<br>
+          <b>Gewünschter Buchungszeitraum:</b> ${CUSTOMER_MESSAGE.anreise} bis ${CUSTOMER_MESSAGE.abreise}<br>
+            <b>Persohnenzahl:</b> ${CUSTOMER_MESSAGE.personenzahl}<br>
+              <b>Hunde an Board?:</b> ${CUSTOMER_MESSAGE.dogsonboard}<br>
+                <b>Anmerkungen:</b>${CUSTOMER_MESSAGE.fragenanmerkungen} </p>`
     }
 
     console.log("msg", msg);
@@ -224,13 +420,21 @@ window.addEventListener("load", (event) => {
   //TODO: Buchungsvalidierung Werte lesbar machen
   //TODO: IF ELSE Konstrukt sinnvoll anlegen
   let testAllesZusammen = async function () {
+    // cache the values of the form
     let CUSTOMER_MESSAGE = await werteCachen()
+
+    //Validation of the arrival & depature
+
+
+    //User Feedback
+
+
     let msg = createMessage(CUSTOMER_MESSAGE)
     console.log('msg', msg);
-    validierungBuchungstage(msg.anreise, msg.abreise)
-    console.log('msg.anreise,', msg.anreise,);
-    await numberValidation(CUSTOMER_MESSAGE)
 
+    console.log('msg.anreise,', msg.anreise,);
+
+    // Fetch the message to Server
     await nachrichtAnServerSchicken(msg)
 
 
@@ -238,53 +442,14 @@ window.addEventListener("load", (event) => {
 
   /*Eventlisterner der das Formular validiert und abschickt, wenn 
   der Button geklickt wird
-
+ 
   */
 
 
   btnkontakt.addEventListener('click', testAllesZusammen)
 
 
-
-  // //POST a new Task
-
-  // ADD_BTN.onclick = async (event) => {
-  //     event.preventDefault()
-
-  //     if (NEWTASK.value == '') {
-  //         console.log('Bitte eine Aufgabe hinzufügen');
-  //         NEWTASK.value = 'Bitte eine Aufgabe hinzufügen'
-  //     }
-  //     else {
-  //         let newTask = { todotask: NEWTASK.value }
-  //         console.log('You added a task', 'NEWTASK:', newTask);
-  //         const ADD_NEW_TASK_PATH = '/todo/post'
-
-
-  //         fetch(ADD_NEW_TASK_PATH, {
-  //             method: 'POST',
-  //             headers: {
-  //                 'Content-Type': 'application/json'
-  //             },
-  //             body: JSON.stringify(newTask)
-  //         })
-  //             .then((resp) => resp.json())
-  //             .then(function (data) {
-  //                 console.log('data.todotask:', data.todotask)
-  //                 showAllTodos()
-  //             })
-  //     }
-  // }
-
-
-
-  // Use the email address or domain you verified above
-  //subject: `${CUSTOMER_MESSAGE.vorname}`,
-  /* html: ` <h1>Anfrage:</h1>
-  <p> <strong>Name:</strong> ${CUSTOMER_MESSAGE.vorname + ' ' + CUSTOMER_MESSAGE.nachname} </p>
-  <p> <strong>Personenzahl:</strong> ${CUSTOMER_MESSAGE.personenzahl}  </p>
-  <p><strong>Hunde?:</strong> ${CUSTOMER_MESSAGE.dogsonboard} </p>
-  <p><strong>Nachricht:</strong> ${CUSTOMER_MESSAGE.fragenanmerkungen} </p>`, */
+ 
 
 });
 
