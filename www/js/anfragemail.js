@@ -194,63 +194,20 @@ convertDateforisBookingWinterSeason('2022/12/24')
 
   /* Function to find out if BookingDate is in winter or summer season */
 
-  let isBookingWinterSeason = function (dateString) {
-    let date = new Date(dateString);
-    // jahresbeginn = new Date('2022-12-24')
-    // saisonendeApril = new Date('2023-04-09')
+  let isBookingWinterSeason = function (dateStringAnreise) {
+    //SummerSeason
+    const summerStart = new Date(year, 3, 10); // 10. April
+    const summerEnd = new Date(year, 11, 23); // 23. Dezember
 
-    let startDate = new Date('2023-12-24')
-    let endDate = new Date('2024-04-09');
-
-    // console.log('date isBookingWinterSeason', date);
-    // //let isWinterSeason = undefined
-    // console.log(date.getFullYear() !== startDate.getFullYear());
-    // console.log();
-
-    //Wenn der angegebene Tag kleiner als der beliebige Start Tag ist
-    // && und der angegebene Tag kleiner ist als der Endtag der Saison 
-    // TODO: ? und wenn der angegebene Tag in der Vergangenheit liegt
-    //Nope, ganz am Anfang machen
-    if (((date >= startDate) && (date <= endDate)) ) {
+    if (((dateStringAnreise <= summerStart) && (dateStringAnreise >= summerEnd))) {
       seasonObj.season.winter = true
-      seasonObj.season.summer = false
-    }
-    //Wenn das angegebene Jahr nicht im beliebigen StartJahr 2022 liegt
-    //&& und wenn das angegebene Jahr größer ist als das 2022
-    else if ((date.getFullYear() !== startDate.getFullYear()) && (date.getFullYear() > startDate.getFullYear())) {
-      let diff = date.getFullYear() - startDate.getFullYear()
-      let actualyear = 2023 + diff
-      let nextactualyear = 2023 + diff +1
-      jahresbeginn = new Date(actualyear, 0, 1)
-      saisonendeApril = new Date(actualyear, 3, 9)
-      saisonStartDez = new Date(actualyear, 11, 24)
-      saisonendeAprilFolgejahr = new Date(nextactualyear , 03, 09);
-      // console.log('jahresbeginn', jahresbeginn);
-      // console.log('saisonendeApril', saisonendeApril);
-      // console.log('diff', diff);
-      // console.log(' startDate', startDate);
-      // console.log(' endDate', endDate);
-      // console.log((date >= startDate) && (date <= endDate));
+      console.log('Sie reisen im Winter an'Wor);
 
-      //Wenn der Tag größer gleich Jahresbegin ist
-      //&& kleiner gleich Saisonende im April ist
-      //ODER wenn der Tag größer gleich der Saison Start im Dezember ist
-      //
-      if (  ((date >= jahresbeginn) && (date <= saisonendeApril)) || ((date >= saisonStartDez) && (date <= saisonendeAprilFolgejahr))) {
-        seasonObj.season.winter = true
-        seasonObj.season.summer = false
-      }
-      // else{
-      //   seasonObj.season.winter = false
-      // seasonObj.season.summer = true
-      // }
-
-    }
-    else {
+    } else {
       seasonObj.season.winter = false
-      seasonObj.season.summer = true
-    }
+      console.log('Sie reisen im Sommer an');
 
+    }
   }
 
 
