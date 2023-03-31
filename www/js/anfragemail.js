@@ -196,12 +196,13 @@ convertDateforisBookingWinterSeason('2022/12/24')
 
   let isBookingWinterSeason = function (dateStringAnreise) {
     //SummerSeason
+    let year = date.getFullYear()
     const summerStart = new Date(year, 3, 10); // 10. April
     const summerEnd = new Date(year, 11, 23); // 23. Dezember
 
     if (((dateStringAnreise <= summerStart) && (dateStringAnreise >= summerEnd))) {
       seasonObj.season.winter = true
-      console.log('Sie reisen im Winter an'Wor);
+      console.log('Sie reisen im Winter an');
 
     } else {
       seasonObj.season.winter = false
