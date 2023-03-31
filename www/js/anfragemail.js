@@ -165,10 +165,10 @@ window.addEventListener("load", (event) => {
   }
 
 
-// Convert Date for isBookingWinterSeason Function
+  // Convert Date for isBookingWinterSeason Function
 
 
-let convertDateforisBookingWinterSeason = function (datum) {
+  let convertDateforisBookingWinterSeason = function (datum) {
 
     //save components of date-string in an array
 
@@ -176,33 +176,33 @@ let convertDateforisBookingWinterSeason = function (datum) {
 
     let dateStringArray = datum.split("/");
     //get values from arry and create a new dateobject 
-  console.log(dateStringArray);
-    let month = dateStringArray[1] 
+    console.log(dateStringArray);
+    let month = dateStringArray[1]
     let date = dateStringArray[2]
     let year = dateStringArray[0]
     // console.log('year', year);
     // console.log('month', month);
     // console.log('date ', date );
     const string = `${year}-${month}-${date} `
-    console.log('string  convertiertes Datum: ', '2022-12-24:', string );
+    console.log('string  convertiertes Datum: ', '2022-12-24:', string);
     return string
-  
-}
 
-convertDateforisBookingWinterSeason('2022/12/24')
+  }
 
 
-  /* Function to find out if BookingDate is in winter or summer season */
+
+
   let isBookingWinterSeason = function (dateAnreise) {
+
     let date = dateAnreise
     console.log('date', date);
     let year = date.getFullYear()
     console.log('year', year);
     //SummerSeason
-    const summerStart = new Date(year, 3, 5); // 5. April
-    const summerEnd = new Date(year, 11, 23); // 23. Dezember
+    const summerStart = new Date(year, 3, 4); // 4. April
+    const summerEnd = new Date(year, 11, 24); // 24. Dezember
 
-    if (((dateAnreise <= summerStart) || (dateAnreise >= summerEnd))) {
+    if ((dateAnreise <= summerStart) || (dateAnreise >= summerEnd)) {
       seasonObj.season.winter = true
       console.log('Sie reisen im Winter an');
 
@@ -215,14 +215,12 @@ convertDateforisBookingWinterSeason('2022/12/24')
     }
   }
 
-
-
   // isBookingWinterSeason('2027-04-26')
   // console.log('isBookingWinterSeason:', seasonObj.season.winter);
 
 
 
-   // Find out Booking duration 
+  // Find out Booking duration 
   //https://linuxhint.com/calculate-days-between-two-dates-javascript/
   let buchungsdauer = (d1, d2) => {
     console.log('d1 in buchungsdauer', d1);
@@ -246,7 +244,7 @@ convertDateforisBookingWinterSeason('2022/12/24')
   // // anreise.addEventListener('focusout', currentSeasonObj)
   // // abreise.addEventListener('focus', currentSeasonObj)
 
-  
+
 
   // //Feedback alert if booking is to short 
 
@@ -261,17 +259,17 @@ convertDateforisBookingWinterSeason('2022/12/24')
     let summer = `In der Sommersaison vom 24.12 - 09.04. kann das Chalet Petit 
     ab einer Buchungsdauer von vier Tagen vermietet werden`
 
-   
 
-    if (iswinter && buchungsdauer <= 7 ) {
+
+    if (iswinter && buchungsdauer <= 7) {
       feedbackBookingToShort.classList.add('alert', 'alert-primary')
       feedbackBookingToShort.innerHTML = `${winter}`
     }
-    else if(!iswinter && buchungsdauer <= 4 ) {
+    else if (!iswinter && buchungsdauer <= 4) {
       feedbackBookingToShort.classList.add('alert', 'alert-primary')
       feedbackBookingToShort.innerHTML = `${summer}`
     }
-    else{
+    else {
       feedbackBookingToShort.classList.remove('alert', 'alert-primary')
       feedbackBookingToShort.innerHTML = ``
 
@@ -279,21 +277,21 @@ convertDateforisBookingWinterSeason('2022/12/24')
   }
 
   //TODO: TESTEN
-    let seasonValidation = function(d1,d2){
+  let seasonValidation = function (d1, d2) {
 
-    
-      let dauer = buchungsdauer(d1,d2 )
-      let wahrheitswert =  convertDateforisBookingWinterSeason (isBookingWinterSeason(d1))
-      console.log('seasonValidation   isBookingWinterSeason',  seasonObj.season.winter );
-    
-      console.log('seasonValidation  buchungsdauer', dauer);
-      durationNotAllowedAlert( wahrheitswert,dauer)
-    
-    } 
-    
-    let d3 = '24/12/2023'
-    let d4 = '25/12/2023'
-    seasonValidation(d3, d4 )
+
+    let dauer = buchungsdauer(d1, d2)
+    let wahrheitswert = convertDateforisBookingWinterSeason(isBookingWinterSeason(d1))
+    console.log('seasonValidation   isBookingWinterSeason', seasonObj.season.winter);
+
+    console.log('seasonValidation  buchungsdauer', dauer);
+    durationNotAllowedAlert(wahrheitswert, dauer)
+
+  }
+
+  let d3 = '24/12/2023'
+  let d4 = '25/12/2023'
+  seasonValidation(d3, d4)
 
 
 
@@ -302,7 +300,7 @@ convertDateforisBookingWinterSeason('2022/12/24')
   arrivalAfterDepatureAlert(feedsesonbacktest)
 
 
-  let copareTimetest = compareTime(testdate1,testdate2 )
+  let copareTimetest = compareTime(testdate1, testdate2)
 
 
 
@@ -415,7 +413,7 @@ convertDateforisBookingWinterSeason('2022/12/24')
   btnkontakt.addEventListener('click', testAllesZusammen)
 
 
- 
+
 
 });
 
