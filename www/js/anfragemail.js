@@ -135,6 +135,43 @@ window.addEventListener("load", (event) => {
     return CUSTOMER_MESSAGE
   }
 
+
+
+// Feedback if Form is complete
+//TODO: fertigstellen
+  
+let feedbackIsComplete = function(CUSTOMER_MESSAGE){
+
+  switch('') {
+    case CUSTOMER_MESSAGE.vorname :
+      console.log('Bitte gib einen Vornamen ein');
+
+      case CUSTOMER_MESSAGE.nachname:
+      console.log('Bitte gib ein Telefonnummer ein');
+
+      case CUSTOMER_MESSAGE.emailadresse:
+        console.log('Bitte gib ein Telefonnummer ein');
+    
+    case CUSTOMER_MESSAGE.telefonnummer:
+      console.log('Bitte gib ein Telefonnummer ein');
+
+      case CUSTOMER_MESSAGE.anreise:
+        console.log('Bitte gib ein Telefonnummer ein');
+
+        case CUSTOMER_MESSAGE.abreise:
+          console.log('Bitte gib ein Telefonnummer ein');
+   
+    // case 'orange':
+    //   console.log('This is an orange.');
+      
+    // default:
+    //   console.log('This is not a banana, apple, or orange.');
+  }
+
+
+}
+
+
   // *******************
   /* Validation of date */
   // *******************
@@ -288,33 +325,16 @@ window.addEventListener("load", (event) => {
     }
   }
 
-  //TODO: TESTEN
-  let seasonValidation = function (d1, d2) {
-
-    console.log('SEASON VALIDATION TEST:');
-    let dauer = buchungsdauer(d1, d2)
-    // let wahrheitswert =  convertDateforisBookingWinterSeason (isBookingWinterSeason(d1))
-    // console.log('seasonValidation   isBookingWinterSeason',  seasonObj.season.winter );
-    // console.log('wahrheitswert:', wahrheitswert);
-
-    // console.log('seasonValidation  buchungsdauer', dauer);
-    // durationNotAllowedAlert( wahrheitswert,dauer)
-
-  }
-
-  let d3 = '24/12/2023'
-  let d4 = '25/12/2023'
-  seasonValidation(d3, d4)
 
 
+//## POP-UP if form was send succesfully
 
-  // let feedsesonbacktest = durationNotAllowedAlert(testdate1, testdate2)
-  // console.log('feedsesonbacktest', feedsesonbacktest);
-  // arrivalAfterDepatureAlert(feedsesonbacktest)
+let formSuccesPopup = function(){
+
+}
 
 
-  // let copareTimetest = compareTime(testdate1,testdate2 )
-
+//
 
 
 
@@ -421,6 +441,7 @@ window.addEventListener("load", (event) => {
 
   let testFunktion = async function () {
     let CUSTOMER_MESSAGE = await werteCachen()
+    feedbackIsComplete(CUSTOMER_MESSAGE) 
     let dauerbuchung = buchungsdauer(CUSTOMER_MESSAGE.anreise, CUSTOMER_MESSAGE.abreise)
     console.log('TEST: buchungsdauer', dauerbuchung);
 
