@@ -263,12 +263,15 @@ convertDateforisBookingWinterSeason('2022/12/24')
   //https://linuxhint.com/calculate-days-between-two-dates-javascript/
   let buchungsdauer = (d1, d2) => {
     console.log('d1 in buchungsdauer', d1);
-    let anreise = convertDate(d1)
-    let abreise = convertDate(d2)
+    let anreise = d1
+    let abreise = d2
     //console.log('anreise in buchungsdauer', anreise);
-    let difference = abreise.getTime() - anreise.getTime();
-    let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+    let difference = abreise - anreise
+    console.log('difference', difference);
+    let bookedNights = Math.ceil(difference / (1000 * 3600 * 24));
+    let TotalDays = bookedNights + 1
     console.log('TotalDays:', TotalDays);
+    console.log('bookedNights:', bookedNights);
     return TotalDays;
   }
 
