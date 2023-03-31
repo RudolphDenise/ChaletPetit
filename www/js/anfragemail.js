@@ -13,6 +13,8 @@ let personenzahl = document.getElementById('personenzahl')
 let radioButtons = formMailAnfrage.hundeanboard
 let fragenanmerkungen = document.getElementById('fragenanmerkungen')
 let btnkontakt = document.getElementById('btnkontakt')
+//TEST BTN
+let btTest = document.getElementById('bttest')
 //Validierungsanzeige / Nutzerfeedback 
 let infomail = document.getElementById('infomail')
 let infonumber = document.getElementById('infonumber')
@@ -27,7 +29,6 @@ let calendar = document.getElementById("ui-datepicker-div")
 // Obj to save the season of arrival Date
 seasonObj = {
   season: {
-    summer: false,
     winter: false,
   }
 }
@@ -37,11 +38,11 @@ seasonObj = {
 
 
 //Mailadresse des Empfängers
-let mailOfEmpfänger = '******gmail.com'
-//let mailOfEmpfänger = '*********@gmail.com'
+let mailOfEmpfänger = 'denise.rudolph.uni@gmail.com'
+//let mailOfEmpfänger = 'roman.roznovsky@gmail.com'
 
 //Mailadresse des Sendgrid-Accounts NICHT ÄNDERBAR
-const MAILOFSENDGRIDACCOUNT = '***********gmail.com'
+const MAILOFSENDGRIDACCOUNT = 'denise.rudolph.uni@gmail.com'
 
 let btnTest = document.getElementById('testformbtn')
 let formTest = document.getElementById('testform')
@@ -98,7 +99,7 @@ window.addEventListener("load", (event) => {
   console.log('convertierungtest', convertierungtest);
 
 
-  //Makes a String ownly with date without time in standard local formatting
+  //Makes a String only with date without time in standard local formatting
   let localDateFormat = function (date) {
     let localeDateFormat = date.toLocaleDateString('de-AT')
     return localeDateFormat
@@ -114,13 +115,15 @@ window.addEventListener("load", (event) => {
     //Plug-in-Code (intl-tel-input), der die ausgewählte Ländervorwahl und Benutzereingabe in das internationale Format umwandelt
     const phoneNumber = phoneInput.getNumber();
     console.log(phoneNumber);
-    console.log('anreise.value', anreise.value);
+
     const CUSTOMER_MESSAGE = {
       vorname: vorname.value,
       nachname: nachname.value,
       emailadresse: emailadresse.value,
       telefonnummer: phoneNumber,
-      //Just convert string in DateObj
+      //Convert string in DateObj
+      // Format des Date-Pickers: anreise.value: 25/1/2023  Tag Monat Jahr 
+      //Format nach Convertierung: Dateobjekt ohne Zeit (00:00)
       anreise: convertDate(anreise.value),
       abreise: convertDate(abreise.value),
       personenzahl: personenzahl.value,
@@ -128,6 +131,7 @@ window.addEventListener("load", (event) => {
       fragenanmerkungen: fragenanmerkungen.value
     }
     console.log('Diese Werte wurden eingegeben:', CUSTOMER_MESSAGE)
+
     return CUSTOMER_MESSAGE
   }
 
@@ -189,17 +193,26 @@ window.addEventListener("load", (event) => {
 
   }
 
+  convertDateforisBookingWinterSeason('2022/12/24')
+
+
+
+
+
+
+
+
+  /* Function to find out if BookingDate is in winter or summer season */
 
 
 
   let isBookingWinterSeason = function (dateAnreise) {
-
     let date = dateAnreise
     console.log('date', date);
     let year = date.getFullYear()
     console.log('year', year);
     //SummerSeason
-    const summerStart = new Date(year, 3, 4); // 4. April
+    const summerStart = new Date(year, 3, 9); // 9. April
     const summerEnd = new Date(year, 11, 24); // 24. Dezember
 
     if ((dateAnreise <= summerStart) || (dateAnreise >= summerEnd)) {
@@ -214,10 +227,6 @@ window.addEventListener("load", (event) => {
 
     }
   }
-
-  // isBookingWinterSeason('2027-04-26')
-  // console.log('isBookingWinterSeason:', seasonObj.season.winter);
-
 
 
   // Find out Booking duration 
@@ -250,10 +259,10 @@ window.addEventListener("load", (event) => {
 
   let durationNotAllowedAlert = function (iswinter, duration) {
     feedbackBookingToShort.innerHTML = ""
-    let buchungsdauer = duration
+    //+1 because Return (duration) of 'buchungsdauer' function is only for nights
+    let buchungsdauer = duration + 1
     //Saisonale Mindestbuchungdauer Text
-    let winter = `In der Wintersaison vom 01.01 - 09.04. und ab 
-    24.12 - 09.04. des Folgejahres kann das Chalet Petit 
+    let winter = `In der Wintersaison (01.01 - 09.04 sowie 24.12 - 31.12) kann das Chalet Petit 
     ab einer Buchungsdauer von sieben Tagen vermietet werden`
 
     let summer = `In der Sommersaison vom 24.12 - 09.04. kann das Chalet Petit 
@@ -261,17 +270,20 @@ window.addEventListener("load", (event) => {
 
 
 
-    if (iswinter && buchungsdauer <= 7) {
+    if (iswinter && (buchungsdauer <= 7)) {
       feedbackBookingToShort.classList.add('alert', 'alert-primary')
       feedbackBookingToShort.innerHTML = `${winter}`
+      console.log('Sie müssen mindestens 7 Tage Buchen');
     }
-    else if (!iswinter && buchungsdauer <= 4) {
+    else if (!iswinter && (buchungsdauer <= 4)) {
       feedbackBookingToShort.classList.add('alert', 'alert-primary')
       feedbackBookingToShort.innerHTML = `${summer}`
+      console.log('Sie müssen mindestens 4 Tage Buchen');
     }
     else {
       feedbackBookingToShort.classList.remove('alert', 'alert-primary')
       feedbackBookingToShort.innerHTML = ``
+      console.log('Die Buchung ist in Ordnung');
 
     }
   }
@@ -279,13 +291,14 @@ window.addEventListener("load", (event) => {
   //TODO: TESTEN
   let seasonValidation = function (d1, d2) {
 
-
+    console.log('SEASON VALIDATION TEST:');
     let dauer = buchungsdauer(d1, d2)
-    let wahrheitswert = convertDateforisBookingWinterSeason(isBookingWinterSeason(d1))
-    console.log('seasonValidation   isBookingWinterSeason', seasonObj.season.winter);
+    // let wahrheitswert =  convertDateforisBookingWinterSeason (isBookingWinterSeason(d1))
+    // console.log('seasonValidation   isBookingWinterSeason',  seasonObj.season.winter );
+    // console.log('wahrheitswert:', wahrheitswert);
 
-    console.log('seasonValidation  buchungsdauer', dauer);
-    durationNotAllowedAlert(wahrheitswert, dauer)
+    // console.log('seasonValidation  buchungsdauer', dauer);
+    // durationNotAllowedAlert( wahrheitswert,dauer)
 
   }
 
@@ -295,12 +308,12 @@ window.addEventListener("load", (event) => {
 
 
 
-  let feedsesonbacktest = durationNotAllowedAlert(testdate1, testdate2)
-  console.log('feedsesonbacktest', feedsesonbacktest);
-  arrivalAfterDepatureAlert(feedsesonbacktest)
+  // let feedsesonbacktest = durationNotAllowedAlert(testdate1, testdate2)
+  // console.log('feedsesonbacktest', feedsesonbacktest);
+  // arrivalAfterDepatureAlert(feedsesonbacktest)
 
 
-  let copareTimetest = compareTime(testdate1, testdate2)
+  // let copareTimetest = compareTime(testdate1,testdate2 )
 
 
 
@@ -399,10 +412,29 @@ window.addEventListener("load", (event) => {
     console.log('msg.anreise,', msg.anreise,);
 
     // Fetch the message to Server
-    await nachrichtAnServerSchicken(msg)
+    //await nachrichtAnServerSchicken(msg)
 
 
   }
+
+  // Testfunktion für BT TEst
+
+  let testFunktion = async function () {
+    let CUSTOMER_MESSAGE = await werteCachen()
+    let dauerbuchung = buchungsdauer(CUSTOMER_MESSAGE.anreise, CUSTOMER_MESSAGE.abreise)
+    console.log('TEST: buchungsdauer', dauerbuchung);
+
+    isBookingWinterSeason(CUSTOMER_MESSAGE.anreise)
+    console.log('seasonObj.season.winter ', seasonObj.season.winter);
+    let iswinter = seasonObj.season.winter
+
+     durationNotAllowedAlert(iswinter, dauerbuchung ) 
+
+  }
+
+
+
+
 
   /*Eventlisterner der das Formular validiert und abschickt, wenn 
   der Button geklickt wird
@@ -411,6 +443,10 @@ window.addEventListener("load", (event) => {
 
 
   btnkontakt.addEventListener('click', testAllesZusammen)
+
+  //BT TEst 
+
+  btTest.addEventListener('click', testFunktion)
 
 
 
