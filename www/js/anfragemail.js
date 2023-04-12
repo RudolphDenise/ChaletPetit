@@ -141,32 +141,54 @@ window.addEventListener("load", (event) => {
 //TODO: fertigstellen
   
 let feedbackIsComplete = function(CUSTOMER_MESSAGE){
+f
+  document.getElementById('feedbackVorname').classList.remove('alert', 'alert-danger')
+  document.getElementById('feedbackVorname').innerHTML = ''
 
-  switch('') {
-    case CUSTOMER_MESSAGE.vorname :
-      console.log('Bitte gib einen Vornamen ein');
+  document.getElementById('feedbackNachname').classList.remove('alert', 'alert-danger')
+  document.getElementById('feedbackNachname').innerHTML = ''
 
-      case CUSTOMER_MESSAGE.nachname:
-      console.log('Bitte gib ein Telefonnummer ein');
+  document.getElementById('feedbackMail').classList.remove('alert', 'alert-danger')
+  document.getElementById('feedbackMail').innerHTML = ''
 
-      case CUSTOMER_MESSAGE.emailadresse:
-        console.log('Bitte gib ein Telefonnummer ein');
-    
-    case CUSTOMER_MESSAGE.telefonnummer:
-      console.log('Bitte gib ein Telefonnummer ein');
+  document.getElementById('feedbackNummer').classList.remove('alert', 'alert-danger')
+  document.getElementById('feedbackNummer').innerHTML = ''
 
-      case CUSTOMER_MESSAGE.anreise:
-        console.log('Bitte gib ein Telefonnummer ein');
+  document.getElementById('feedbackAnreise').classList.remove('alert', 'alert-danger')
+  document.getElementById('feedbackAnreise').innerHTML = ''
 
-        case CUSTOMER_MESSAGE.abreise:
-          console.log('Bitte gib ein Telefonnummer ein');
-   
-    // case 'orange':
-    //   console.log('This is an orange.');
-      
-    // default:
-    //   console.log('This is not a banana, apple, or orange.');
+  document.getElementById('feedbackAbreise').classList.remove('alert', 'alert-danger')
+  document.getElementById('feedbackAbreise').innerHTML = ''
+
+
+
+
+  if (CUSTOMER_MESSAGE.vorname == '') {
+    document.getElementById('feedbackVorname').classList.add('alert', 'alert-danger')
+    document.getElementById('feedbackVorname').innerHTML = 'Bitte gib deinen Vornamen ein'
   }
+  if (CUSTOMER_MESSAGE.nachname == '') {
+    document.getElementById('feedbackNachname').classList.add('alert', 'alert-danger')
+    document.getElementById('feedbackNachname').innerHTML = 'Bitte gib deinen Nachnamen ein'
+  }
+  if (CUSTOMER_MESSAGE.emailadresse == '') {
+    document.getElementById('feedbackMail').classList.add('alert', 'alert-danger')
+    document.getElementById('feedbackMail').innerHTML = 'Bitte gib deine E-Mail-Adresse ein'
+  }
+  if (CUSTOMER_MESSAGE.telefonnummer == ''  ) {
+    document.getElementById('feedbackNummer').classList.add('alert', 'alert-danger')
+    document.getElementById('feedbackNummer').innerHTML = 'Bitte gib deine Telefonnummer ein'
+
+  }
+  if ((CUSTOMER_MESSAGE.anreise == '') ||(isNaN(CUSTOMER_MESSAGE.anreise )) ) {
+    document.getElementById('feedbackAnreise').classList.add('alert', 'alert-danger')
+    document.getElementById('feedbackAnreise').innerHTML = 'Bitte wähle deinen Anreisetag aus'
+  }
+  if (CUSTOMER_MESSAGE.abreise == '' ||(isNaN(CUSTOMER_MESSAGE.anreise )) ) {
+    document.getElementById('feedbackAbreise').classList.add('alert', 'alert-danger')
+    document.getElementById('feedbackAbreise').innerHTML = 'Bitte wähle deinen Abreisetag aus'
+  }
+
 
 
 }
