@@ -184,7 +184,7 @@ f
     document.getElementById('feedbackAnreise').classList.add('alert', 'alert-danger')
     document.getElementById('feedbackAnreise').innerHTML = 'Bitte wähle deinen Anreisetag aus'
   }
-  if (CUSTOMER_MESSAGE.abreise == '' ||(isNaN(CUSTOMER_MESSAGE.anreise )) ) {
+  if (CUSTOMER_MESSAGE.abreise == '' ||(isNaN(CUSTOMER_MESSAGE.abreise )) ) {
     document.getElementById('feedbackAbreise').classList.add('alert', 'alert-danger')
     document.getElementById('feedbackAbreise').innerHTML = 'Bitte wähle deinen Abreisetag aus'
   }
