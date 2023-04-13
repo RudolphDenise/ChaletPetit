@@ -196,6 +196,8 @@ window.addEventListener("load", (event) => {
   }
 
 
+  
+  // Function which produces an alert if RegEx is not right
   let alertMailFormat = function(isFormatRight, mail = '' ){
 
     let errormail = document.getElementById('errormail')
@@ -209,7 +211,7 @@ window.addEventListener("load", (event) => {
   }
 
 
-
+  // Function which produces an alert if RegEx is not right
   let alertNumberFormat = function(isFormatRight, number = '' ){
 
     let errornumber = document.getElementById('errornumber')
@@ -238,23 +240,14 @@ window.addEventListener("load", (event) => {
 
   let arrivalAfterDepatureAlert = function (isChronologyRight) {
     feedbackDivArrivalAfterDepature.innerHTML = ""
-
-
+    feedbackDivArrivalAfterDepature.classList.remove('alert', 'alert-danger')
+    
     if (!isChronologyRight) {
-      anreise.classList.add('alert', 'alert-danger')
-      abreise.classList.add('alert', 'alert-danger')
       feedbackDivArrivalAfterDepature.classList.add('alert', 'alert-danger')
       feedbackDivArrivalAfterDepature.innerHTML = `Hoppala, da ist etwas schief gelaufen! <br>
     Bitte überprüfe und korregiere Deine Buchungsdaten.`
-
     }
-    else {
-      anreise.classList.remove('alert', 'alert-danger')
-      abreise.classList.remove('alert', 'alert-danger')
-      feedbackDivArrivalAfterDepature.innerHTML = ""
-
-    }
-
+  
   }
 
 
@@ -490,6 +483,12 @@ window.addEventListener("load", (event) => {
     let iswinter = seasonObj.season.winter
     //Alert if the booking is to short for the season
     durationNotAllowedAlert(iswinter, bookingDuration)
+    
+    //Find out if Arrival is before Depature
+    let isChronologyRight = compareIfArriavalBeforeDepature(CUSTOMER_MESSAGE.anreise, CUSTOMER_MESSAGE.abreise)
+    //Alert if Arrival is after Depature
+    arrivalAfterDepatureAlert(isChronologyRight)
+
     //Find out if mail has  a regular format
     isMailFormatRight = mailValidation(CUSTOMER_MESSAGE.emailadresse)
     //Alert if mail has not a regular format
