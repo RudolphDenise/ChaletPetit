@@ -137,61 +137,91 @@ window.addEventListener("load", (event) => {
 
 
 
-// Feedback if Form is complete
-//TODO: fertigstellen
-  
-let feedbackIsComplete = function(CUSTOMER_MESSAGE){
-f
-  document.getElementById('feedbackVorname').classList.remove('alert', 'alert-danger')
-  document.getElementById('feedbackVorname').innerHTML = ''
-
-  document.getElementById('feedbackNachname').classList.remove('alert', 'alert-danger')
-  document.getElementById('feedbackNachname').innerHTML = ''
-
-  document.getElementById('feedbackMail').classList.remove('alert', 'alert-danger')
-  document.getElementById('feedbackMail').innerHTML = ''
-
-  document.getElementById('feedbackNummer').classList.remove('alert', 'alert-danger')
-  document.getElementById('feedbackNummer').innerHTML = ''
-
-  document.getElementById('feedbackAnreise').classList.remove('alert', 'alert-danger')
-  document.getElementById('feedbackAnreise').innerHTML = ''
-
-  document.getElementById('feedbackAbreise').classList.remove('alert', 'alert-danger')
-  document.getElementById('feedbackAbreise').innerHTML = ''
+  // Feedback if Form is complete
+  //Nice to have: Geht es weniger sperrig?
 
 
+  let alertIncompletePromt = function (CUSTOMER_MESSAGE) {
+    //Resets display of the divs with an alert
+    document.getElementById('feedbackVorname').classList.remove('alert', 'alert-danger')
+    document.getElementById('feedbackVorname').innerHTML = ''
+
+    document.getElementById('feedbackNachname').classList.remove('alert', 'alert-danger')
+    document.getElementById('feedbackNachname').innerHTML = ''
+
+    document.getElementById('feedbackMail').classList.remove('alert', 'alert-danger')
+    document.getElementById('feedbackMail').innerHTML = ''
+
+    document.getElementById('feedbackNummer').classList.remove('alert', 'alert-danger')
+    document.getElementById('feedbackNummer').innerHTML = ''
+
+    document.getElementById('feedbackAnreise').classList.remove('alert', 'alert-danger')
+    document.getElementById('feedbackAnreise').innerHTML = ''
+
+    document.getElementById('feedbackAbreise').classList.remove('alert', 'alert-danger')
+    document.getElementById('feedbackAbreise').innerHTML = ''
+
+    //Checks if the customer entered something
+
+    if (CUSTOMER_MESSAGE.vorname == '') {
+      document.getElementById('feedbackVorname').classList.add('alert', 'alert-danger')
+      document.getElementById('feedbackVorname').innerHTML = 'Bitte gib deinen Vornamen ein'
+    }
+    if (CUSTOMER_MESSAGE.nachname == '') {
+      document.getElementById('feedbackNachname').classList.add('alert', 'alert-danger')
+      document.getElementById('feedbackNachname').innerHTML = 'Bitte gib deinen Nachnamen ein'
+    }
+    if (CUSTOMER_MESSAGE.emailadresse == '') {
+      document.getElementById('feedbackMail').classList.add('alert', 'alert-danger')
+      document.getElementById('feedbackMail').innerHTML = 'Bitte gib deine E-Mail-Adresse ein'
+    }
+    if (CUSTOMER_MESSAGE.telefonnummer == '') {
+      document.getElementById('feedbackNummer').classList.add('alert', 'alert-danger')
+      document.getElementById('feedbackNummer').innerHTML = 'Bitte gib deine Telefonnummer ein'
+
+    }
+
+    /* The second condition is used, because after the customer deleted 
+    a field the value of the field is NaN */
+    if ((CUSTOMER_MESSAGE.anreise == '') || (isNaN(CUSTOMER_MESSAGE.anreise))) {
+      document.getElementById('feedbackAnreise').classList.add('alert', 'alert-danger')
+      document.getElementById('feedbackAnreise').innerHTML = 'Bitte wähle deinen Anreisetag aus'
+    }
+    if (CUSTOMER_MESSAGE.abreise == '' || (isNaN(CUSTOMER_MESSAGE.abreise))) {
+      document.getElementById('feedbackAbreise').classList.add('alert', 'alert-danger')
+      document.getElementById('feedbackAbreise').innerHTML = 'Bitte wähle deinen Abreisetag aus'
+    }
 
 
-  if (CUSTOMER_MESSAGE.vorname == '') {
-    document.getElementById('feedbackVorname').classList.add('alert', 'alert-danger')
-    document.getElementById('feedbackVorname').innerHTML = 'Bitte gib deinen Vornamen ein'
   }
-  if (CUSTOMER_MESSAGE.nachname == '') {
-    document.getElementById('feedbackNachname').classList.add('alert', 'alert-danger')
-    document.getElementById('feedbackNachname').innerHTML = 'Bitte gib deinen Nachnamen ein'
-  }
-  if (CUSTOMER_MESSAGE.emailadresse == '') {
-    document.getElementById('feedbackMail').classList.add('alert', 'alert-danger')
-    document.getElementById('feedbackMail').innerHTML = 'Bitte gib deine E-Mail-Adresse ein'
-  }
-  if (CUSTOMER_MESSAGE.telefonnummer == ''  ) {
-    document.getElementById('feedbackNummer').classList.add('alert', 'alert-danger')
-    document.getElementById('feedbackNummer').innerHTML = 'Bitte gib deine Telefonnummer ein'
 
-  }
-  if ((CUSTOMER_MESSAGE.anreise == '') ||(isNaN(CUSTOMER_MESSAGE.anreise )) ) {
-    document.getElementById('feedbackAnreise').classList.add('alert', 'alert-danger')
-    document.getElementById('feedbackAnreise').innerHTML = 'Bitte wähle deinen Anreisetag aus'
-  }
-  if (CUSTOMER_MESSAGE.abreise == '' ||(isNaN(CUSTOMER_MESSAGE.abreise )) ) {
-    document.getElementById('feedbackAbreise').classList.add('alert', 'alert-danger')
-    document.getElementById('feedbackAbreise').innerHTML = 'Bitte wähle deinen Abreisetag aus'
+
+  let alertMailFormat = function(isFormatRight, mail = '' ){
+
+    let errormail = document.getElementById('errormail')
+    errormail.classList.remove('alert', 'alert-primary')
+    errormail.innerHTML = ''
+
+    if(!isFormatRight){
+      errormail.classList.add('alert', 'alert-primary')
+      errormail.innerHTML =`Überprüfe, ob du deine E-Mail-Adresse <b>${mail}</b> richtig eingegeben hast</>`
+    }
   }
 
 
 
-}
+  let alertNumberFormat = function(isFormatRight, number = '' ){
+
+    let errornumber = document.getElementById('errornumber')
+    errornumber.classList.remove('alert', 'alert-primary')
+    errornumber.innerHTML = ''
+
+    if(!isFormatRight){
+      errornumber.classList.add('alert', 'alert-primary')
+      errornumber.innerHTML =`Überprüfe, ob du deine Telefonnummer <b>${number}</b> richtig eingegeben hast</>`
+    }
+  }
+
 
 
   // *******************
@@ -308,10 +338,6 @@ f
 
 
 
-  // // anreise.addEventListener('focus', currentSeasonObj)
-  // // anreise.addEventListener('focusout', currentSeasonObj)
-  // // abreise.addEventListener('focus', currentSeasonObj)
-
 
 
   // //Feedback alert if booking is to short 
@@ -349,14 +375,14 @@ f
 
 
 
-//## POP-UP if form was send succesfully
+  //## POP-UP if form was send succesfully
 
-let formSuccesPopup = function(){
+  let formSuccesPopup = function () {
 
-}
+  }
 
 
-//
+  //
 
 
 
@@ -401,35 +427,24 @@ let formSuccesPopup = function(){
 
   //Validierung Mail
 
-  let mailValidation = function (msg) {
+  let mailValidation = function (CUSTOMER_MESSAGE) {
 
+    const regex = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(CUSTOMER_MESSAGE.emailadresse)
+  }
 
+  //Validation if number is in E.164 format
+
+  let numberValidation = function(CUSTOMER_MESSAGE){
+    const internationalPhoneNumberRegex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
+    return internationalPhoneNumberRegex.test(CUSTOMER_MESSAGE.telefonnummer)
 
   }
 
-  //Validierung Telefonnummer
+ 
 
   //TODO: https://www.twilio.com/de/blog/-uberprufen-telefonnummerneingabe-html-javascript
-  // isValidNumber Funktion zum Funktionieren bringen
-  let numberValidation = function (CUSTOMER_MESSAGE) {
 
-    infonumber.style.display = "none";
-    errornumber.style.display = "none";
-    console.log('CUSTOMER_MESSAGE', CUSTOMER_MESSAGE, 'CUSTOMER_MESSAGE.telefonnummer', CUSTOMER_MESSAGE.telefonnummer);
-    console.log('valitdation number:  ', CUSTOMER_MESSAGE.telefonnummer);
-    //let valdationNumber = CUSTOMER_MESSAGE.telefonnummer.isValidNumber()
-    let valdationNumber = CUSTOMER_MESSAGE.telefonnummer
-
-    if (valdationNumber) {
-      infonumber.style.display = "";
-      infonumber.innerHTML = `Phone number in E.164 format: <strong>${CUSTOMER_MESSAGE.telefonnummer}</strong>`;
-      console.log('valitdation number if ');
-    } else {
-      errornumber.style.display = "";
-      errornumber.innerHTML = `Invalid phone number.`;
-      console.log('valitdation number else');
-    }
-  }
 
 
   /** Funktion, in der die einzelen Funktionen im Event-Listerner
@@ -461,17 +476,36 @@ let formSuccesPopup = function(){
 
   // Testfunktion für BT TEst
 
-  let testFunktion = async function () {
+  let testFunktion = async function ( ) {
+    //event.preventDefault()
     let CUSTOMER_MESSAGE = await werteCachen()
-    feedbackIsComplete(CUSTOMER_MESSAGE) 
-    let dauerbuchung = buchungsdauer(CUSTOMER_MESSAGE.anreise, CUSTOMER_MESSAGE.abreise)
-    console.log('TEST: buchungsdauer', dauerbuchung);
-
+    //User feedback if promt is incomplete
+    alertIncompletePromt(CUSTOMER_MESSAGE)
+    //Find out the booking duration
+    let bookingDuration = buchungsdauer(CUSTOMER_MESSAGE.anreise, CUSTOMER_MESSAGE.abreise)
+    //console.log('TEST: buchungsdauer', dauerbuchung);
+    // Find out which season: summer or winter
     isBookingWinterSeason(CUSTOMER_MESSAGE.anreise)
     console.log('seasonObj.season.winter ', seasonObj.season.winter);
     let iswinter = seasonObj.season.winter
+    //Alert if the booking is to short for the season
+    durationNotAllowedAlert(iswinter, bookingDuration)
+    //Find out if mail has  a regular format
+    isMailFormatRight = mailValidation(CUSTOMER_MESSAGE.emailadresse)
+    //Alert if mail has not a regular format
+    alertMailFormat(isMailFormatRight, CUSTOMER_MESSAGE.emailadresse)
+    //Find out if mail has  a regular format
+    isNumberFormatRight = numberValidation(CUSTOMER_MESSAGE.telefonnummer)
+     //Alert if number has not a regular format
+    alertNumberFormat(isNumberFormatRight, CUSTOMER_MESSAGE.telefonnummer)
+    //Close OffCanvas of the Form open OffCanvasDanke
+  
+   
 
-     durationNotAllowedAlert(iswinter, dauerbuchung ) 
+
+
+  
+    
 
   }
 
@@ -491,7 +525,36 @@ let formSuccesPopup = function(){
 
   btTest.addEventListener('click', testFunktion)
 
+  formMailAnfrage.addEventListener("submit", function(event) {
+    event.preventDefault(); // Verhindert das Standardverhalten des Submit-Buttons
+    
+    // Formular senden (mit AJAX oder einer anderen Methode)
+   
+    
+    let formCanvas =  bootstrap.Offcanvas.getInstance(jetztanfragen);
+    console.log('formCanvas', formCanvas);
+    formCanvas.hide();
 
+    //let dankeCanvas = document.getElementById('offcanvasdanke')
+
+    //let dankeCanvasI = await bootstrap.Offcanvas.getInstance(dankeCanvas);
+    /*The code is different here because there is a need that the offcanvas
+    is opened once by the button to create and  initialize with the show()-method of the Offcanvas-Object
+    This offcanvas-constructor-function makes it possible to create and initialize the canvas
+    without clicking the button just with code 
+    after it the variable "dankeCanvasI" is not "null" */ 
+    dankeCanvasI = new bootstrap.Offcanvas(offcanvasdanke)
+    console.log('dankeCanvasI', dankeCanvasI);
+    dankeCanvasI.show();
+    console.log('Du hast das Formular abgesendet');
+  
+  })
+  
+  
+  
+  
+  
+  
 
 
 });
