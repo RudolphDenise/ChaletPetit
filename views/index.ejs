@@ -1,7 +1,25 @@
 <%- include('head') %>
   <%- include('nav') %>
     <%- include('hero') %>
+    <%- include('offcanvasDanke') %>
 
+    <!-- OFF CANVAS Danke: Feedback beim Absendn der Mail-->
+    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasdanke" style="display: none;" aria-controls="offcanvasdanke">
+      Toggle static offcanvas
+    </button>
+    
+   <!-- OFF CANVAS Danke: Feedback beim Absendn der Mail-->
+    <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="offcanvasdanke" aria-labelledby="offcanvasdankeLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasdankeLabel">Offcanvas</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div>
+          I will not close if you click outside of me.
+        </div>
+      </div>
+    </div>
 
       <!-- OFF CANVAS JETZT ANFRAGEN: E-Mail Anfragen von Kunden-->
       <div class="offcanvas offcanvas-start " data-placement="right" data-disableScrolling="false"
@@ -15,82 +33,151 @@
             <!--FORM -->
             <form id="formjetzanfragen" action="/" method="POST" class="container">
 
-              
+
               <div class="cont">
                 <div class="form sign-in">
                   <h2>Chalet Aufenthalt reservieren:</h2>
-                  <label>
+                  <div>
+                    <label for="vorname" class="form-label">Vorname</label>
+                    <input type="text" class="form-control" id="vorname">
+                  </div>
+                  <div class="container mt-1" id="feedbackVorname"></div>
+                  <!-- <label>
                     <span>Vorname</span>
                     <input id="vorname" type="text" />
-                  </label>
-                  <label>
+                  </label> -->
+
+
+                  <!-- <label>
                     <span>Nachname</span>
                     <input id="nachname" type="text" />
-                  </label>
-                  <label>
+                  </label> -->
+
+                  <div>
+                    <label for="nachname" class="form-label">Nachname</label>
+                    <input type="text" class="form-control" id="nachname">
+                  </div>
+                  <div class="mt-1" id="feedbackNachname"></div>
+
+                  <!-- <label>
                     <span>E-Mail</span>
                     <input id="emailadresse" type="email" />
-                  </label>
+                  </label> -->
+                  <div>
+                    <label for="emailadresse" class="form-label">E-Mail</label>
+                    <input type="email" class="form-control" id="emailadresse">
+                  </div>
+                  <div class="mt-1" id="feedbackMail"></div>
+
                   <!-- Valisierungsanzeige Mail -->
-                  <div id="infomail" class="alert alert-info" style="display: none"></div>
-                  <div id="errormail" class="alert alert-error" style="display: none"></div>
+        
+                  <div  class="mt-1" id="errormail" ></div>
 
-
+                  <!-- 
                   <label>
                     <span>Telefonnummer</span>
                     <input id="telefonnummer" type="tel" />
-                  </label>
-                     <!-- Validierungsanzeige Telefonnummer -->
+                  </label> -->
+
+                  <div>
+                    <label for="telefonnummer" class="form-label">Telefonnummer</label>
+                    <input type="tel" class="form-control" id="telefonnummer">
+                  </div>
+                  <div class="mt-1" id="feedbackNummer"></div>
+                  <div class="mt-1" id="errornumber"></div>
+
+                  <!-- Validierungsanzeige Telefonnummer -->
                   <div id="infonumber" class="alert alert-info" style="display: none"></div>
                   <div id="errornumber" class="alert alert-error" style="display: none"></div>
-                 
 
-                  <label class="buchungszeitraum"> </label>
-                  <span>Buchungszeitraum</span>
-                  <div class="form-group">
-                    <input id="dp1" type="text" class="form-control clickable input-md " id="DtChkIn"
-                      placeholder="   Check-In">
+                  <div>
+                    <label class="buchungszeitraum">Buchungszeitraum </label>
+
+                    <div class="form-group">
+                      <input id="dp1" type="text" class="form-control clickable input-md " id="DtChkIn"
+                        placeholder="   Anreise">
+                    </div>
+                    <div id="feedbackAnreise"></div>
+                    <div class="form-group">
+                      <input id="dp2" type="text" class="form-control clickable input-md" id="DtChkOut"
+                        placeholder="  Abreise">
+                    </div>
+                    <div class="mt-1" id="feedbackarrivalafterdepature"></div>
+                    <div class="mt-1" id="feedbackbookingtoshort"></div>
+
+                    <div class="mt-1" id="feedbackAbreise"></div>
                   </div>
-                  <div class="form-group">
-                    <input id="dp2" type="text" class="form-control clickable input-md" id="DtChkOut"
-                      placeholder="  Check-Out">
-                  </div>
 
 
-                  <label>
-                    <span>Personenzahl</span>
-                    <select id="personenzahl" name="personenzahl">
+
+                  <div ></div>
+                    <label>Personenzahl</label>
+                    <select  id="personenzahl" name="personenzahl">
                       <option selected value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
                       <option value="4">4</option>
                     </select>
-                  </label>
+                  </div>
 
-                  <label>
+                  <!-- <label>
                     <span>Möchten Sie Hunde mithenmen?</span>
                     <input id="dognein" type="radio" id="nein" name="hundeanboard" value="Nein"> Nein
                     <input id="dogja" type="radio" id="ja" name="hundeanboard" value="Ja"> Ja
-                  </label>
+                  </label> -->
+
+                  
+                  
+                  <div class="form-check">
+                    <p id="labellikep">Möchten Sie Hunde mithenmen?</p>
+                    <label class="form-check-label" for="dognein">
+                      Nein
+                    </label>
+                    <input class="form-check-input" type="radio" name="hundeanboard" id="dognein" checked>
+                   
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label" for="dogja">
+                      Ja
+                    </label>
+                    <input class="form-check-input" type="radio" name="hundeanboard" id="dogja" >
+                   
+                  </div>
+                  
+                  <!-- <div class="form-check">
+                    <label>Möchten Sie Hunde mithenmen?</label>
+                    <label class="form-check-label" for="dognein">
+                      Nein
+                    </label>
+                    <input class="form-check-input" type="radio" name="hundeanboard" id="dognein" checked>
+
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label" for="dogja">
+                      Ja
+                    </label>
+                    <input class="form-check-input" type="radio" name="hundeanboard" id="dogja">
+
+                  </div> -->
 
 
 
-                  <label>
-                    <span>Haben Sie Fragen oder Anmerkungen?</span>
-                    <textarea id="fragenanmerkungen" rows="4" cols="25" name="comment" form="formjetanfragen">
-                </textarea>
-                  </label>
+                  <div class="form-check">
+                    <label for="fragenanmerkungen" class="form-label">Haben Sie Fragen oder Anmerkungen?</label>
+                    <textarea class="form-control" id="fragenanmerkungen" rows="4" cols="25" name="comment"
+                      form="formjetanfragen"></textarea>
+                  </div>
 
 
-            
 
-                <!-- Userfeedback Divs -->
-    
-                  <div class="" id="feedbackarrivalafterdepature"></div>
-                  <div class="alert alert-primary" id="feedbackbookingtoshort"></div>
+
+                  <!-- Userfeedback Divs -->
+
+
 
                   <button id="btnkontakt" type="button" class="submit">Anfrage absenden!</button>
                   <button id="bttest" type="button" class="submit">Anfrage absenden!</button>
+
                 </div>
               </div>
 
@@ -123,7 +210,7 @@
         <div class="p-4">
           <h2 class="p-3 ">Über das Chalet Petit </h2>
 
-          
+
 
           <h3> Uneinsichtig Lage auf 1650m</h3>
           <p data-aos="fade-in" data-aos-easing="linear" data-aos-duration="" data-aos-once="true">Kein seelenloses
