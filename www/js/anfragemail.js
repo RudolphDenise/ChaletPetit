@@ -1,6 +1,5 @@
 console.log('anfragemail loaded');
 
-
 //Global Variables
 let formMailAnfrage = document.getElementById('formjetzanfragen')
 let vorname = document.getElementById('vorname')
@@ -24,8 +23,6 @@ let feedbackDivArrivalAfterDepature = document.getElementById('feedbackarrivalaf
 let feedbackBookingToShort = document.getElementById('feedbackbookingtoshort')
 let calendar = document.getElementById("ui-datepicker-div")
 
-
-
 // Obj to save the season of arrival Date
 seasonObj = {
   season: {
@@ -34,37 +31,17 @@ seasonObj = {
 }
 
 
-
-
-
 //Mailadresse des Empfängers
 let mailOfEmpfänger = 'denise.rudolph.uni@gmail.com'
 //let mailOfEmpfänger = 'roman.roznovsky@gmail.com'
-
 //Mailadresse des Sendgrid-Accounts NICHT ÄNDERBAR
 const MAILOFSENDGRIDACCOUNT = 'denise.rudolph.uni@gmail.com'
-
 let btnTest = document.getElementById('testformbtn')
 let formTest = document.getElementById('testform')
 
 
 window.addEventListener("load", (event) => {
   console.log("page is fully loaded");
-
-
-
-  let testGetFetch = async function () {
-    console.log('btn works');
-
-    const ADD_TEST_GETFETCH_PATH = '/requestmail/get'
-    let testFetch = await fetch(ADD_TEST_GETFETCH_PATH)
-      .then(res =>
-        res.json()).then(d => {
-          console.log(d)
-        })
-  }
-
-
 
   // *******************
   /* Conversion of date */
@@ -74,7 +51,6 @@ window.addEventListener("load", (event) => {
   let testdate2 = '02/15/2023'
 
   // Convert date from array to dateobj
-
   let testDate = '02/11/2023'
   let convertDate = function (bookingdate) {
     //save components of date-string in an array
@@ -92,7 +68,6 @@ window.addEventListener("load", (event) => {
     return EntrydateObj
 
   }
-
 
 
   let convertierungtest = convertDate(testDate)
@@ -131,15 +106,12 @@ window.addEventListener("load", (event) => {
       fragenanmerkungen: fragenanmerkungen.value
     }
     console.log('Diese Werte wurden eingegeben:', CUSTOMER_MESSAGE)
-
     return CUSTOMER_MESSAGE
   }
 
 
-
   // Feedback if Form is complete
   //Nice to have: Geht es weniger sperrig?
-
 
   let alertIncompletePromt = function (CUSTOMER_MESSAGE) {
     //Resets display of the divs with an alert
@@ -178,7 +150,6 @@ window.addEventListener("load", (event) => {
     if (CUSTOMER_MESSAGE.telefonnummer == '') {
       document.getElementById('feedbackNummer').classList.add('alert', 'alert-danger')
       document.getElementById('feedbackNummer').innerHTML = 'Bitte gib deine Telefonnummer ein'
-
     }
 
     /* The second condition is used, because after the customer deleted 
@@ -195,35 +166,68 @@ window.addEventListener("load", (event) => {
 
   }
 
+  //Prove if all inputs of form are filled in
+  function validateAllFormInputsfilledIn() {
+    // Holen Sie sich alle Eingabefelder im Formular
+    var inputs = formMailAnfrage.getElementsByTagName("input");
+    // Schleife durch die Eingabefelder und prüfen Sie, ob sie ausgefüllt wurden
+    for (var i = 0; i < inputs.length; i++) {
+      if (inputs[i].value == "") {
+        // Wenn ein Eingabefeld leer ist, geben Sie false zurück
+        return false;
+      }
+    }
+    // Wenn alle Eingabefelder ausgefüllt sind, geben Sie true zurück
+    return true;
+  }
 
-  
+
+  //Prove if no allert is left
+  function allFeedbackdivsEmpty() {
+
+
+    // Holen Sie sich alle Eingabefelder im Formular
+    var feedbackdiv = formMailAnfrage.getElementsByClassName("feedbackdiv");
+    console.log(feedbackdiv);
+    // Schleife durch die Eingabefelder und prüfen Sie, ob sie ausgefüllt wurden
+    for (var i = 0; i < feedbackdiv.length; i++) {
+
+      if (!(feedbackdiv[i].innerHTML == '')) {
+        console.log(feedbackdiv[i], feedbackdiv[i].innerHTML);
+        console.log('hELLO');
+        // Wenn ein Eingabefeld leer ist, geben Sie false zurück
+        return false;
+      }
+    }
+
+    // Wenn alle Eingabefelder ausgefüllt sind, geben Sie true zurück
+    return true;
+  }
+
+
   // Function which produces an alert if RegEx is not right
-  let alertMailFormat = function(isFormatRight, mail = '' ){
-
+  let alertMailFormat = function (isFormatRight, mail = '') {
     let errormail = document.getElementById('errormail')
     errormail.classList.remove('alert', 'alert-primary')
     errormail.innerHTML = ''
-
-    if(!isFormatRight){
+    if (!isFormatRight) {
       errormail.classList.add('alert', 'alert-primary')
-      errormail.innerHTML =`Überprüfe, ob du deine E-Mail-Adresse <b>${mail}</b> richtig eingegeben hast</>`
+      errormail.innerHTML = `Überprüfe, ob du deine E-Mail-Adresse <b>${mail}</b> richtig eingegeben hast</>`
     }
   }
 
 
   // Function which produces an alert if RegEx is not right
-  let alertNumberFormat = function(isFormatRight, number = '' ){
-
+  let alertNumberFormat = function (isFormatRight, number = '') {
     let errornumber = document.getElementById('errornumber')
     errornumber.classList.remove('alert', 'alert-primary')
     errornumber.innerHTML = ''
 
-    if(!isFormatRight){
+    if (!isFormatRight) {
       errornumber.classList.add('alert', 'alert-primary')
-      errornumber.innerHTML =`Überprüfe, ob du deine Telefonnummer <b>${number}</b> richtig eingegeben hast</>`
+      errornumber.innerHTML = `Überprüfe, ob du deine Telefonnummer <b>${number}</b> richtig eingegeben hast</>`
     }
   }
-
 
 
   // *******************
@@ -237,29 +241,21 @@ window.addEventListener("load", (event) => {
 
 
   //Visual feedback alert if arrival is after depature
-
   let arrivalAfterDepatureAlert = function (isChronologyRight) {
     feedbackDivArrivalAfterDepature.innerHTML = ""
     feedbackDivArrivalAfterDepature.classList.remove('alert', 'alert-danger')
-    
+
     if (!isChronologyRight) {
       feedbackDivArrivalAfterDepature.classList.add('alert', 'alert-danger')
       feedbackDivArrivalAfterDepature.innerHTML = `Hoppala, da ist etwas schief gelaufen! <br>
     Bitte überprüfe und korregiere Deine Buchungsdaten.`
     }
-  
   }
 
-
   // Convert Date for isBookingWinterSeason Function
-
-
   let convertDateforisBookingWinterSeason = function (datum) {
-
     //save components of date-string in an array
-
     //'2022-12-24'
-
     let dateStringArray = datum.split("/");
     //get values from arry and create a new dateobject 
     console.log(dateStringArray);
@@ -272,21 +268,10 @@ window.addEventListener("load", (event) => {
     const string = `${year}-${month}-${date} `
     console.log('string  convertiertes Datum: ', '2022-12-24:', string);
     return string
-
   }
-
-  convertDateforisBookingWinterSeason('2022/12/24')
-
-
-
-
-
-
 
 
   /* Function to find out if BookingDate is in winter or summer season */
-
-
 
   let isBookingWinterSeason = function (dateAnreise) {
     let date = dateAnreise
@@ -310,7 +295,6 @@ window.addEventListener("load", (event) => {
     }
   }
 
-
   // Find out Booking duration 
   //https://linuxhint.com/calculate-days-between-two-dates-javascript/
   let buchungsdauer = (d1, d2) => {
@@ -327,12 +311,6 @@ window.addEventListener("load", (event) => {
     return TotalDays;
   }
 
-
-
-
-
-
-
   // //Feedback alert if booking is to short 
 
   let durationNotAllowedAlert = function (iswinter, duration) {
@@ -345,8 +323,6 @@ window.addEventListener("load", (event) => {
 
     let summer = `In der Sommersaison vom 24.12 - 09.04. kann das Chalet Petit 
     ab einer Buchungsdauer von vier Tagen vermietet werden`
-
-
 
     if (iswinter && (buchungsdauer <= 7)) {
       feedbackBookingToShort.classList.add('alert', 'alert-primary')
@@ -366,19 +342,6 @@ window.addEventListener("load", (event) => {
     }
   }
 
-
-
-  //## POP-UP if form was send succesfully
-
-  let formSuccesPopup = function () {
-
-  }
-
-
-  //
-
-
-
   let createMessage = function (CUSTOMER_MESSAGE) {
     event.preventDefault()
 
@@ -395,17 +358,16 @@ window.addEventListener("load", (event) => {
               <b>Hunde an Board?:</b> ${CUSTOMER_MESSAGE.dogsonboard}<br>
                 <b>Anmerkungen:</b>${CUSTOMER_MESSAGE.fragenanmerkungen} </p>`
     }
-
     console.log("msg", msg);
     return msg
   }
 
+
+   //FETCH
   let nachrichtAnServerSchicken = async function (msg) {
-    //FETCH
     let msgFETCH = msg
     console.log('msgFETCH', msgFETCH)
     const ADD_CUSTOMER_MAIL_PATH = '/api'
-
     await fetch(ADD_CUSTOMER_MAIL_PATH, {
       method: 'POST',
       headers: {
@@ -413,63 +375,43 @@ window.addEventListener("load", (event) => {
       },
       body: JSON.stringify(msgFETCH)
     })
-
-
-
   }
 
   //Validierung Mail
-
   let mailValidation = function (CUSTOMER_MESSAGE) {
-
     const regex = /^(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return regex.test(CUSTOMER_MESSAGE.emailadresse)
   }
-
   //Validation if number is in E.164 format
-
-  let numberValidation = function(CUSTOMER_MESSAGE){
+  let numberValidation = function (CUSTOMER_MESSAGE) {
     const internationalPhoneNumberRegex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
     return internationalPhoneNumberRegex.test(CUSTOMER_MESSAGE.telefonnummer)
-
   }
 
- 
-
-  //TODO: https://www.twilio.com/de/blog/-uberprufen-telefonnummerneingabe-html-javascript
-
-
+  let openAndCloseCanvas = function () {
+    let formCanvas = bootstrap.Offcanvas.getInstance(jetztanfragen);
+    console.log('formCanvas', formCanvas);
+    formCanvas.hide();
+    //let dankeCanvas = document.getElementById('offcanvasdanke')
+    //let dankeCanvasI = await bootstrap.Offcanvas.getInstance(dankeCanvas);
+    /*The code is different here because there is a need that the offcanvas
+    is opened once by the button to create and  initialize with the show()-method of the Offcanvas-Object
+    This offcanvas-constructor-function makes it possible to create and initialize the canvas
+    without clicking the button just with code 
+    after it the variable "dankeCanvasI" is not "null" */
+    dankeCanvasI = new bootstrap.Offcanvas(offcanvasdanke)
+    console.log('dankeCanvasI', dankeCanvasI);
+    dankeCanvasI.show();
+    console.log('Du hast das Formular abgesendet');
+  }
 
   /** Funktion, in der die einzelen Funktionen im Event-Listerner
    * nacheinander abgerufen werden */
 
 
-  //TODO: Buchungsvalidierung Werte lesbar machen
-  //TODO: IF ELSE Konstrukt sinnvoll anlegen
-  let testAllesZusammen = async function () {
-    // cache the values of the form
-    let CUSTOMER_MESSAGE = await werteCachen()
+  // Everything together
 
-    //Validation of the arrival & depature
-
-
-    //User Feedback
-
-
-    let msg = createMessage(CUSTOMER_MESSAGE)
-    console.log('msg', msg);
-
-    console.log('msg.anreise,', msg.anreise,);
-
-    // Fetch the message to Server
-    //await nachrichtAnServerSchicken(msg)
-
-
-  }
-
-  // Testfunktion für BT TEst
-
-  let testFunktion = async function ( ) {
+  let testFunktion = async function () {
     //event.preventDefault()
     let CUSTOMER_MESSAGE = await werteCachen()
     //User feedback if promt is incomplete
@@ -483,77 +425,57 @@ window.addEventListener("load", (event) => {
     let iswinter = seasonObj.season.winter
     //Alert if the booking is to short for the season
     durationNotAllowedAlert(iswinter, bookingDuration)
-    
+
     //Find out if Arrival is before Depature
     let isChronologyRight = compareIfArriavalBeforeDepature(CUSTOMER_MESSAGE.anreise, CUSTOMER_MESSAGE.abreise)
     //Alert if Arrival is after Depature
     arrivalAfterDepatureAlert(isChronologyRight)
 
-    //Find out if mail has  a regular format
-    isMailFormatRight = mailValidation(CUSTOMER_MESSAGE.emailadresse)
-    //Alert if mail has not a regular format
-    alertMailFormat(isMailFormatRight, CUSTOMER_MESSAGE.emailadresse)
-    //Find out if mail has  a regular format
-    isNumberFormatRight = numberValidation(CUSTOMER_MESSAGE.telefonnummer)
-     //Alert if number has not a regular format
-    alertNumberFormat(isNumberFormatRight, CUSTOMER_MESSAGE.telefonnummer)
-    //Close OffCanvas of the Form open OffCanvasDanke
-  
-   
+    // //Find out if mail has  a regular format
+    // isMailFormatRight = mailValidation(CUSTOMER_MESSAGE.emailadresse)
+    // //Alert if mail has not a regular format
+    // alertMailFormat(isMailFormatRight, CUSTOMER_MESSAGE.emailadresse)
+    // //Find out if mail has  a regular format
+    // isNumberFormatRight = numberValidation(CUSTOMER_MESSAGE.telefonnummer)
+    //  //Alert if number has not a regular format
+    // alertNumberFormat(isNumberFormatRight, CUSTOMER_MESSAGE.telefonnummer)
 
-
-
-  
-    
-
+    //Validate if every Input is filled in
+    let inputes = validateAllFormInputsfilledIn()
+    console.log('inputes', inputes);
+    //Validate if all feedbackdivs are empty
+    let feedbackdivs = allFeedbackdivsEmpty()
+    console.log('feedbackdivs', feedbackdivs);
+    // create Message and Fetch if everything is filled out 
+    if (inputes && feedbackdivs) {
+      let msg = createMessage(CUSTOMER_MESSAGE)
+      console.log('msg', msg);
+      console.log('msg.anreise,', msg.anreise,);
+      // Formular senden (mit AJAX oder einer anderen Methode)
+      // Fetch the message to Server
+      await nachrichtAnServerSchicken(msg)
+      //Close OffCanvas of the Form open OffCanvasDanke
+      openAndCloseCanvas()
+    }
   }
-
-
-
-
 
   /*Eventlisterner der das Formular validiert und abschickt, wenn 
   der Button geklickt wird
  
   */
-
-
-  btnkontakt.addEventListener('click', testAllesZusammen)
-
-  //BT TEst 
-
+  //BTN 
   btTest.addEventListener('click', testFunktion)
 
-  formMailAnfrage.addEventListener("submit", function(event) {
-    event.preventDefault(); // Verhindert das Standardverhalten des Submit-Buttons
-    
-    // Formular senden (mit AJAX oder einer anderen Methode)
-   
-    
-    let formCanvas =  bootstrap.Offcanvas.getInstance(jetztanfragen);
-    console.log('formCanvas', formCanvas);
-    formCanvas.hide();
 
-    //let dankeCanvas = document.getElementById('offcanvasdanke')
 
-    //let dankeCanvasI = await bootstrap.Offcanvas.getInstance(dankeCanvas);
-    /*The code is different here because there is a need that the offcanvas
-    is opened once by the button to create and  initialize with the show()-method of the Offcanvas-Object
-    This offcanvas-constructor-function makes it possible to create and initialize the canvas
-    without clicking the button just with code 
-    after it the variable "dankeCanvasI" is not "null" */ 
-    dankeCanvasI = new bootstrap.Offcanvas(offcanvasdanke)
-    console.log('dankeCanvasI', dankeCanvasI);
-    dankeCanvasI.show();
-    console.log('Du hast das Formular abgesendet');
-  
-  })
-  
-  
-  
-  
-  
-  
+
+ 
+
+
+
+
+
+
 
 
 });
